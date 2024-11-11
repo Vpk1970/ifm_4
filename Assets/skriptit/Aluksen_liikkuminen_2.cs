@@ -12,14 +12,14 @@ public class Aluksenliikkuminen : MonoBehaviour
     private float x_vasen_reuna = -8;
 
     public int elamat = 3;
-    public GameObject alus = null;
+    public GameObject pelaajanAlus = null;
     private GameObject lives_teksti = null;
-
+    
     // Start is called before the first frame update
     void Start()
     {
-        this.lives_teksti = GameObject.Find("lives_text");
-        //this.lives_teksti.GetComponent<Text>().text = "Lives " + elamat;
+        this.lives_teksti = GameObject.Find("lives_teksti");
+        this.lives_teksti.GetComponent<Text>().text = "ELÄMÄT: " + elamat;
 
     }
 
@@ -43,34 +43,35 @@ public class Aluksenliikkuminen : MonoBehaviour
                 this.GetComponent<Transform>().Translate(-liikkumis_nopeus * Time.deltaTime, 0f, 0f);
             }
         }
+
+        lives_teksti.GetComponent<Text>().text = "ELÄMÄT: " + elamat.ToString("0");
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.name.Equals("Alien_ammus_1(Clone)"))
+        
+        if (collision.name.Equals("Ammus_4(Clone)"))
         {
-            this.alus.SetActive(false);//Destroy(this.gameObject);
+            this.pelaajanAlus.SetActive(false);//Destroy(this.gameObject);
             this.elamat -= 1;
             //Debug.Log(elamat);
-            this.lives_teksti.GetComponent<Text>().text = "Lives " + elamat;
+            this.lives_teksti.GetComponent<Text>().text = "ELÄMÄT: " + elamat;
 
             // Tähän väliin ajastimella tauko
+            Invoke("luo_alus", 2.0f);
 
-            this.alus.SetActive(true);
-            GameObject apualus = Instantiate(this.alus, new Vector3(0f, -4f, 0f), Quaternion.identity);
             
-            //apualus.name = "ship(Clone)";
-            //Debug.Log(apualus.name);
 
             if (this.elamat <= 0)
             {
-                //elossa = 0;
-                //Debug.Log("Uusi_alus");
+                
                 Destroy(this.gameObject);
-                //this.alus.SetActive(false);
-                //GameObject apualus = Instantiate(this.alus, new Vector3(0f, -4f, 0f), Quaternion.identity);
-                //Debug.Log(elamat);
-                //this.elamat = 3;
+                
             }
         }
+    }
+    public void luo_alus()
+    {
+        this.GetComponent<Transform>().position = new Vector3(0f, -4f, 0f);
+        this.pelaajanAlus.SetActive(true);
     }
 }

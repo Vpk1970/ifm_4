@@ -3,123 +3,188 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Diagnostics;
+//using System.Diagnostics;
 using Unity.VisualScripting;
-using System;
+//using System;
+using System.Xml.Schema;
+using UnityEngine.UIElements;
+//using System;
 //using Debug = System.Diagnostics.Debug;
 
 
 public class Alien_liike_2 : MonoBehaviour
 {
-    private float alku_x;
-    private float loppu_x;
+    private float alku_x; // Alienin alkupiste
+    private float loppu_x; // Alienin loppupiste
 
-    private float liike_nopeus = 3f;
-    private const float x_matka = 6f;
+    private int suunta; // Alienin liikkumissuunta -1 tai 1
+    private float x_matka; // Alienin kulkema matka
+    private float nopeus; // Liikkumisnopeus
+    private bool suunnanVaihto; // Vaihdetaanko alienien liikkumissuuntaa ?
+    private bool alienienLuonti; 
+    private float aikaclamp;
+    private Vector3 origAlienPos; // Alienien alkupiste
+    private Vector3 origAlienPosMax; // Alienien loppupiste
 
-    //private float y_nopeus = 0f;
-    private float y = -0.1f;
+    private float alien_up_to_down_offset; // Alienien liikkuminen pystysuunnassa
 
-    //public AlienLuontiTehdas_2 luo;
-    private float offset = 1.2f;
-    public GameObject Alien_5;
+    private float y_alienAlareuna; // Alin piste
+
+    //public GameObject alien;
+
+    //public GameObject alienAmmus;
+    //private GameObject apuluonti;
+
+    public AlienLuontiTehdas_2 alienlt;
 
     static int alienDeaths = 0;
-    //public AlienLuontiTehdas_2 Luo_Alien;
 
+    private float xMin; // Alaraja jonka yläpuolella suunnanVaihto on true
+    private float xMax; // Yläraja jonka alapuolella suunnanVaihto on true
 
+    public Transform _transform;
 
     private void Awake()
     {
-        alku_x = this.GetComponent<Transform>().position.x;
-        loppu_x = alku_x + x_matka;
-
-        UnityEngine.Debug.Log(alku_x);
-        UnityEngine.Debug.Log(loppu_x);
-
-        
-
 
     }
     // Start is called before the first frame update
     void Start()
     {
-        //Luo_Alien = GameObject.Find("Koodia").GetComponent<AlienLuontiTehdas_2>().AlienLuonti_2();
+        suunta = 1;
+        x_matka = 8.0f;
+        nopeus = 2.5f;
+        suunnanVaihto = false;
+        alien_up_to_down_offset = 0.1f;
+        y_alienAlareuna = -2f;
+        
+        origAlienPos = this.GetComponent<Transform>().position;
+        origAlienPosMax = new Vector3(this.GetComponent<Transform>().position.x + x_matka, this.GetComponent<Transform>().position.y, this.GetComponent<Transform>().position.z);
 
-        //Luo_Alien = this.GetComponent<AlienLuontiTehdas_2>().AlienLuonti_2();
-        //UnityEngine.Debug.Log(this.gameObject.name);
-        //luo = gameObject.GetComponent<AlienLuontiTehdas_2>().AlienLuonti_2();
+        xMin = 0.2f * x_matka;
+        xMax = 0.2f * x_matka;
+
+        alku_x = this.GetComponent<Transform>().position.x;
+        loppu_x = this.GetComponent<Transform>().position.x + x_matka; // oli 7
+
+        AlienLuontiTehdas_2 alienlt = GetComponent<AlienLuontiTehdas_2>();
+
+        _transform = this.GetComponent<Transform>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        //GameObject.FindWithTag("Alien_tag").GetComponent<Transform>().Translate(liike_nopeus * Time.deltaTime, 0f, 0f);
-        Alien_5.GetComponent<Transform>().Translate(liike_nopeus * Time.deltaTime, 0f, 0f);
-        //this.GetComponent<Transform>().position.y -= y_nopeus;
-        //
 
         //[Conditional(UNITY_ASSERTIONS)]
         //Debug.Assert(alku_x == loppu_x);
 
         // Jos alku_x on sama kuin loppu_x tulee ilmoitus konsoliin
-        //UnityEngine.Debug.Assert(alku_x != loppu_x);
+        //UnityEngine.Debug.Assert(suunnanVaihto == true);
+        
+        this._transform.position += nopeus * Time.deltaTime * new Vector3(1f * suunta, 0f, 0f);// localPosition ???        
 
-        if (this.GetComponent<Transform>().position.x >= loppu_x || this.GetComponent<Transform>().position.x < alku_x) // ???
+        if (this._transform.position.x <= alku_x)
         {
-            liike_nopeus *= -1f;
-            //y = -0.2f;
-            Alien_5.transform.position = new Vector3(this.GetComponent<Transform>().position.x, this.GetComponent<Transform>().position.y + y, 0f);
+            this._transform.position = origAlienPos - new Vector3( 0f, alien_up_to_down_offset += 0.1f, 0f);
 
-            if (Alien_5.GetComponent<Transform>().position.y <= -2f)
+            //Debug.Log(this.transform.position.x);
+
+        }
+        if (this._transform.position.x >= loppu_x)
+        {
+            this._transform.position = origAlienPosMax - new Vector3( 0f, alien_up_to_down_offset += 0.1f, 0f);
+
+            //suunnanVaihto = true;
+
+        }
+  
+
+        if ((this._transform.position.x >= alku_x + xMin) || (this._transform.position.x <= loppu_x - xMax))
+        {
+            suunnanVaihto = true;
+            //Debug.Log(suunnanVaihto);
+            //alienienLuonti = true;
+
+
+        }
+        else
+        {
+            suunnanVaihto = false;
+            //Debug.Log(suunnanVaihto);
+        }
+
+        if (((this._transform.position.x >= loppu_x) && (suunnanVaihto)) || ((this._transform.position.x <= alku_x) && (suunnanVaihto))) // ???
+        {
+            suunta *= -1;
+            suunnanVaihto = false;          
+            
+            Debug.Log(this._transform.position.x);
+                        
+            if (this.GetComponent<Transform>().position.y <= y_alienAlareuna)
             {
                 //Application.Quit();
                 Destroy(this.gameObject);
 
-
             }
 
         }
-        /*if (this.GetComponent<Transform>().position.x < alku_x) // x <= alku_x ...muutos x < alku_x 
+
+        /*if ((this.transform.position.x <= alku_x) && (alienienLuonti == true))
         {
-            liike_nopeus *= -1f;
+            //suunta *= -1.0f;
+            alienienLuonti = false;
+
+            AlienLuontiTehdas_2 alienlt = GameObject.Find("Koodia").GetComponent<AlienLuontiTehdas_2>();
+
+            alienlt.Invoke(nameof(AlienLuontiTehdas_2.AlienLuonti_2), 0.0f);
+
+            alku_x = this.GetComponent<Transform>().position.x;
+            loppu_x = this.GetComponent<Transform>().position.x + x_matka;
+
         }*/
-        //this.GetComponent<Transform>().Translate(liike_nopeus * Time.deltaTime, 0f, 0f);
 
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.name.Equals("Ammus_5(Clone)"))
+        /*if ((this.transform.position.x <= alku_x) && (alienienLuonti == true))
         {
-            Destroy(this.gameObject);
-            //Debug.Log("collision");
-            alienDeaths += 1;
-            if (alienDeaths == 32)
+            foreach (GameObject o in GameObject.FindGameObjectsWithTag("Alien_tag"))
             {
-                //Luo_Alien;
-                GameObject.Find("Koodia").GetComponent<AlienLuontiTehdas_2>().AlienLuonti_2();
-
-                /*for (float y = 1f; y <= 4f; y = y + 1f)
-                {
-                    for (float x = 1f; x <= 8f; x = x + 1f)
-                    {
-                        Alien_5.name = "alien";
-                        _ = Instantiate(Alien_5, new Vector3(x - 8 * offset + 2, 5 - y * offset, 0f), Quaternion.identity);
-                        
-                    }
-                }*/
-                //System.Diagnostics.Debug.WriteLine(Alien_5.name);
-
-                //luo.AlienLuonti_2();
-
-                //GameObject.Find("AlienLuontiTehdas_2").GetComponent<AlienLuontiTehdas_2>().alienLuonti_2();
-                alienDeaths = 0;
-
+                Destroy(o);
             }
 
-            GameObject.Find("Koodia").GetComponent<Pisteet>().pisteet += 10;
+            //Destroy(GameObject.Find("Alien"));
 
-        }
+            AlienLuontiTehdas_2 alienlt = GameObject.Find("Koodia").GetComponent<AlienLuontiTehdas_2>();
+
+            alienlt.Invoke(nameof(AlienLuontiTehdas_2.AlienLuonti_2), 0.0f);
+
+            alienienLuonti = false;
+
+            alku_x = this.GetComponent<Transform>().position.x;
+            loppu_x = this.GetComponent<Transform>().position.x + x_matka;
+
+        }*/
     }
-}
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.name.Equals("Ammus_5(Clone)"))
+            {
+                //Destroy(this.Ammus_5);
+
+                Destroy(this.gameObject);
+                //Debug.Log("collision");
+                alienDeaths += 1;
+                if (alienDeaths == 32)
+                {
+                    alienDeaths = 0;
+                    AlienLuontiTehdas_2 alienlt = GameObject.Find("Koodia").GetComponent<AlienLuontiTehdas_2>();
+                    alienlt.Invoke(nameof(AlienLuontiTehdas_2.AlienLuonti_2), 3.0f);
+
+                }
+                GameObject.Find("Koodia").GetComponent<Pisteet>().pisteet += 10;
+            }
+        }
+
+    }
+

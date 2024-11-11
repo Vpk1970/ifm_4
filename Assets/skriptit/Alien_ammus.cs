@@ -20,7 +20,11 @@ public class Alien_ammus : MonoBehaviour
         {
             GameObject apualienammus = Instantiate(this.alien_ammus, new Vector3(this.GetComponent<Transform>().position.x,
                 this.GetComponent<Transform>().position.y - 0.9f, 0f), Quaternion.identity);
-
+            
+            //Debug.Log(apualienammus.name);
         }
+    
     }
+    
 }
+

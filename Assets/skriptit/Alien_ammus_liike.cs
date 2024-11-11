@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Alien_ammus_liike : MonoBehaviour
 {
+    [SerializeField]
     private float nopeus = -10f;
     private float alaraja = -4f;
 
@@ -26,4 +27,13 @@ public class Alien_ammus_liike : MonoBehaviour
 
         }
     }
+    /*private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.name.Equals("ship(Clone)"))
+        {
+            Debug.Log("alien osui alukseen");
+
+
+        }
+    }*/
 }
