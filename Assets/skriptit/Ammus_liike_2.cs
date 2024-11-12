@@ -32,7 +32,7 @@ public class Ammus_liike_2 : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.name.Equals("Alien(Clone)"))
+        if (collision.name.Equals("Alien"))
         {
 
             GameObject.Find("Koodia").GetComponent<Pisteet>().pisteet += 10;

@@ -46,6 +46,8 @@ public class AlienLuontiTehdas_2 : MonoBehaviour
                 for (float x = 0f; x <= 7f; x = x + 1f)
                 {
                 GameObject gameObject1 = Instantiate(alien, new Vector3(-8 + (offset * x), 4 - (offset * y), 0f), Quaternion.identity);
+                gameObject1.name = "Alien";
+
                 }
             }
             //aikaajaljella = 10;
