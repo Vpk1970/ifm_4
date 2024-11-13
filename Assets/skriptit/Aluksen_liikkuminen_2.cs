@@ -43,6 +43,11 @@ public class Aluksenliikkuminen : MonoBehaviour
                 this.GetComponent<Transform>().Translate(-liikkumis_nopeus * Time.deltaTime, 0f, 0f);
             }
         }
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
 
         lives_teksti.GetComponent<Text>().text = "ELÄMÄT: " + elamat.ToString("0");
     }

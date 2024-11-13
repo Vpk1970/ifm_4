@@ -14,10 +14,14 @@ public class Intro : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.anyKey)
+        if (Input.GetKey(KeyCode.Return))
         {
             SceneManager.LoadScene(1);
 
+        }
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
         }
         
     }
