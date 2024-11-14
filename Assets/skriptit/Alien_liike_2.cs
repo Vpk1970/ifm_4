@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 //using System;
 using System.Xml.Schema;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 //using System;
 //using Debug = System.Diagnostics.Debug;
 //
@@ -128,6 +129,11 @@ public class Alien_liike_2 : MonoBehaviour
             {
                 //Application.Quit();
                 Destroy(this.gameObject);
+                PlayerPrefs.SetFloat("score", GameObject.Find("Koodia").GetComponent<Pisteet>().pisteet);
+
+                //Debug.Log(GameObject.Find("Koodia").GetComponent<Pisteet>().pisteet);
+
+                SceneManager.LoadScene(2);
 
             }
 

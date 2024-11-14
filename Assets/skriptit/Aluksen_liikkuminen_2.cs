@@ -4,6 +4,8 @@ using Unity.VisualScripting.ReorderableList.Element_Adder_Menu;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class Aluksenliikkuminen : MonoBehaviour
 {
@@ -70,6 +72,14 @@ public class Aluksenliikkuminen : MonoBehaviour
             {
                 
                 Destroy(this.gameObject);
+
+                PlayerPrefs.SetFloat("score", GameObject.Find("Koodia").GetComponent<Pisteet>().pisteet);
+
+                //Debug.Log(GameObject.Find("Koodia").GetComponent<Pisteet>().pisteet);
+
+                SceneManager.LoadScene(2);
+
+
                 
             }
         }
