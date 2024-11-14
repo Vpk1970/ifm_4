@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 // T‰m‰ liitet‰‰n Game_Over skeneen kameraan
@@ -18,6 +19,10 @@ public class Game_Over : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.anyKey)
+        {
+            SceneManager.LoadScene(0);
+
+        }
     }
 }
