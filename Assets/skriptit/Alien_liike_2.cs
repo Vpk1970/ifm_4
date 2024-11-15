@@ -47,6 +47,9 @@ public class Alien_liike_2 : MonoBehaviour
 
     public Transform _transform;
 
+    static float addAlienSpeed = 1f;
+
+
     private void Awake()
     {
 
@@ -74,6 +77,9 @@ public class Alien_liike_2 : MonoBehaviour
 
         _transform = this.GetComponent<Transform>();
 
+        //addAlienSpeed = 1f;
+
+
     }
 
     // Update is called once per frame
@@ -86,7 +92,8 @@ public class Alien_liike_2 : MonoBehaviour
         // Jos alku_x on sama kuin loppu_x tulee ilmoitus konsoliin
         //UnityEngine.Debug.Assert(suunnanVaihto == true);
         
-        this._transform.position += nopeus * Time.deltaTime * new Vector3(1f * suunta, 0f, 0f);// localPosition ???        
+        this._transform.position += nopeus * addAlienSpeed * Time.deltaTime * new Vector3(1f * suunta, 0f, 0f);// localPosition ???        
+        Debug.Log(addAlienSpeed);
 
         if (this._transform.position.x <= alku_x)
         {
@@ -123,7 +130,7 @@ public class Alien_liike_2 : MonoBehaviour
             suunta *= -1;
             suunnanVaihto = false;          
             
-            Debug.Log(this._transform.position.x);
+            //Debug.Log(this._transform.position.x);
                         
             if (this.GetComponent<Transform>().position.y <= y_alienAlareuna)
             {
@@ -185,6 +192,9 @@ public class Alien_liike_2 : MonoBehaviour
                 alienDeaths += 1;
                 if (alienDeaths == 32)
                 {
+                    addAlienSpeed += 0.2f;
+                    Debug.Log(addAlienSpeed);
+
                     alienDeaths = 0;
                     AlienLuontiTehdas_2 alienlt = GameObject.Find("Koodia").GetComponent<AlienLuontiTehdas_2>();
                     alienlt.Invoke(nameof(AlienLuontiTehdas_2.AlienLuonti_2), 3.0f);
