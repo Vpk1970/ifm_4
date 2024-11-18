@@ -49,6 +49,10 @@ public class Alien_liike_2 : MonoBehaviour
 
     static float addAlienSpeed = 1f;
 
+    public GameObject paukku = null;
+
+
+
 
     private void Awake()
     {
@@ -189,10 +193,19 @@ public class Alien_liike_2 : MonoBehaviour
 
                 Destroy(this.gameObject);
                 //Debug.Log("collision");
+
+                GameObject apupaukku = Instantiate (this.paukku, this.GetComponent<Transform>().position, Quaternion.identity);
+                Destroy(apupaukku.gameObject, 1f );
+
+
                 alienDeaths += 1;
                 if (alienDeaths == 32)
                 {
                     addAlienSpeed += 0.2f;
+                    if (addAlienSpeed >= 2)
+                    {
+                        addAlienSpeed = 2;
+                    }
                     Debug.Log(addAlienSpeed);
 
                     alienDeaths = 0;
