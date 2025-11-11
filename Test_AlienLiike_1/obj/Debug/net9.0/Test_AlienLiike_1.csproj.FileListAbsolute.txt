@@ -1,0 +1,6 @@
+I:\ifm_4\ifm_4\ifm_4\Test_AlienLiike_1\obj\Debug\net9.0\Test_AlienLiike_1.csproj.AssemblyReference.cache
+I:\ifm_4\ifm_4\ifm_4\Test_AlienLiike_1\obj\Debug\net9.0\Test_AlienLiike_1.GeneratedMSBuildEditorConfig.editorconfig
+I:\ifm_4\ifm_4\ifm_4\Test_AlienLiike_1\obj\Debug\net9.0\Test_AlienLiike_1.AssemblyInfoInputs.cache
+I:\ifm_4\ifm_4\ifm_4\Test_AlienLiike_1\obj\Debug\net9.0\Test_AlienLiike_1.AssemblyInfo.cs
+I:\ifm_4\ifm_4\ifm_4\Test_AlienLiike_1\obj\Debug\net9.0\Test_AlienLiike_1.csproj.CoreCompileInputs.cache
+I:\ifm_4\ifm_4\ifm_4\Test_AlienLiike_1\obj\Debug\net9.0\Test_AlienLiike_1.sourcelink.json
