@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Ammus_liike_2 : MonoBehaviour
 {
     [SerializeField]
-    private float nopeus = 100f;
-    private float yläraja = 4f;
+    private float nopeus = 35f;
+    private float ylaraja = 6f;
 
     // Start is called before the first frame update
     void Start()
@@ -19,39 +20,34 @@ public class Ammus_liike_2 : MonoBehaviour
     {
         // Ammus liikkuu koneen nopeudesta riippumatta samalla nopeudella
 
-        //this.GetComponent<Transform>().Translate(0f, nopeus * Time.deltaTime, 0f);
-
         this.GetComponent<Rigidbody2D>().MovePosition(transform.position + new Vector3(0f, nopeus * Time.deltaTime, 0f));
 
         //this.Ammus_6.GetComponent<Rigidbody2D>().AddForce(Vector2.up * nopeus);
-        //Debug.Log(this.gameObject.name);
-
-        if (this.GetComponent<Transform>().position.y > yläraja)
+        
+        if (this.GetComponent<Transform>().position.y > ylaraja)
         {
             Destroy(this.gameObject);
 
         }
-
-
-
-
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.name.Equals("Alien(Clone)"))
+        if (collision.name.Equals("Alien"))
         {
+            Destroy(this.gameObject);
 
             GameObject.Find("Koodia").GetComponent<Pisteet>().pisteet += 10;
             //GameObject.Find("Koodia").GetComponent<score_lives>().pisteet += 10;
+            
 
-            //Debug.Log(GameObject.Find("Koodia").GetComponent<score_lives>().pisteet);
-
-
-            Destroy(this.gameObject);
-
+        }
+        if (collision.name.Equals("mAlien"))
+        {
+            //Debug.Log("Tï¿½rmï¿½ys");
+            GameObject.Find("Koodia").GetComponent<Pisteet>().pisteet += 350;
 
         }
     }
+    
 }
