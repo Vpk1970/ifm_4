@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: df15028391e769542aa98f3f6adeee26
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - mAlien_2: {fileID: 6449471115325609778, guid: 0856ea1ee48f8644996be08c5d5e1461, type: 3}
+  - paukku_2: {fileID: 5679043600785392565, guid: 15023037366df3547b111f067225c3a6, type: 3}
+  - explosion_2: {fileID: 1481039884905224001, guid: 225d8d34627319d4aad78da863b665c9, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
